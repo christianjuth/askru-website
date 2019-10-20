@@ -3,7 +3,16 @@ body{
   background-color: #eee;
 }
 
+.fake-link{
+  text-decoration: none;
+  color: unset;
+}
+
 .App {
+  /* padding-top: 80px; */
+}
+
+.Content {
   padding-top: 80px;
 }
 

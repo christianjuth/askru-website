@@ -1,13 +1,23 @@
 import React from 'react';
 import {fade, makeStyles} from '@material-ui/core/styles';
+import {Link} from "react-router-dom";
 import { AppBar, Toolbar, Typography, InputBase, Grid } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { connect } from 'react-redux';
 import { search } from '../redux/actions';
+import {withRouter} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
+  toolbar: {
+    // borderBottomWidth: 1,
+    // borderBottomStyle: 'solid',
+    // borderColor: '#ccc'
+  },
   grow: {
     flexGrow: 1
+  },
+  title: {
+    fontWeight: 400
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -15,9 +25,9 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.black, 0.05),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.black, 0.08)
     },
     marginLeft: 0,
     width: '100%',
@@ -47,19 +57,23 @@ function Navbar(props) {
   const classes = useStyles();
 
   function onSearch(e) {
+    if(props.history.location.pathname !== '/')
+      props.history.push('/');
     props.dispatch(search({
       query: e.target.value
     }));
   }
 
   return (<div className={classes.grow}>
-    <AppBar position="fixed">
+    <AppBar position="fixed" elevation={0} className={classes.toolbar}>
       <Grid container="container" direction="row" justify="center" alignItems="center">
         <Grid item="item" xs={12} md={8}>
           <Toolbar disableGutters={true}>
-            <Typography variant="h6" noWrap="noWrap">
-              AskRU
-            </Typography>
+            <Link to='/' className='fake-link'>
+              <Typography variant="h6" className={classes.title} noWrap="noWrap">
+                Ask<b>RU</b>
+              </Typography>
+            </Link>
             <div className={classes.grow}/>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -90,4 +104,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withRouter(Navbar));

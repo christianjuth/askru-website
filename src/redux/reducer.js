@@ -1,7 +1,8 @@
 
 import {
   SEARCH_SET,
-  SEARCH_RESULTS
+  SEARCH_RESULTS,
+  AUTHENTICATE
 } from './actions';
 
 export default function reducer(state, action) {
@@ -16,6 +17,11 @@ export default function reducer(state, action) {
         ...state,
         searchResults: action.payload
       };
+    case AUTHENTICATE:
+      return {
+        ...state,
+        userId: action.payload.userId
+      };
     default:
       return state;
   }
@@ -23,5 +29,6 @@ export default function reducer(state, action) {
 
 export const initialState = {
   search: '',
-  searchResults: []
+  searchResults: [],
+  userId: null
 };
